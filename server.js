@@ -28,10 +28,10 @@ app.get("/", (req, res) => {
   res.send("API Working");
 });
 
-// Local run ke liye (sirf development me)
+// Local development ke liye
 if (process.env.NODE_ENV !== "production") {
   app.listen(4000, () => console.log("Local server running..."));
 }
 
-// Vercel/Netlify ke liye (serverless function)
-export const handler = serverless(app);
+// Vercel ke liye
+export default app;
