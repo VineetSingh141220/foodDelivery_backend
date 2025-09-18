@@ -5,14 +5,16 @@ import foodRouter from "./routes/foodRoute.js";
 import userRouter from "./routes/userRoute.js";
 import cartRouter from "./routes/cartRoute.js";
 import orderRouter from "./routes/orderRoute.js";
-import serverless from "serverless-http";
 import "dotenv/config";
 
 const app = express();
 
 // middlewares
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: process.env.FRONTEND_URL || '*',
+  credentials: true
+}));
 
 // DB connection
 connectDB();
@@ -25,13 +27,36 @@ app.use("/api/cart", cartRouter);
 app.use("/api/order", orderRouter);
 
 app.get("/", (req, res) => {
-  res.send("API Working");
+  res.json({ 
+    message: "API Working", 
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV || "development"
+  });
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error('Error:', err);
+  res.status(500).json({ 
+    success: false, 
+    message: "Internal Server Error",
+    error: process.env.NODE_ENV === "development" ? err.message : "Something went wrong"
+  });
+});
+
+// Handle 404
+app.use((req, res) => {
+  res.status(404).json({ 
+    success: false, 
+    message: "Route not found" 
+  });
 });
 
 // Local development ke liye
 if (process.env.NODE_ENV !== "production") {
-  app.listen(4000, () => console.log("Local server running..."));
+  const PORT = process.env.PORT || 4000;
+  app.listen(PORT, () => console.log(`Local server running on port ${PORT}...`));
 }
 
-// Vercel ke liye
+// Vercel ke liye export
 export default app;
