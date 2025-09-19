@@ -24,12 +24,8 @@ app.use("/api/cart", cartRouter);
 app.use("/api/order", orderRouter);
 
 app.get("/", (req, res) => {
-  res.send("API Working");
+  res.send("API Working ✅");
 });
 
-// ❌ ye line hata dena
-// app.listen(port, () => {
-//   console.log(`Server Started on http://localhost:${port}`);
-// });
-
-export default app;  // ✅ ye add kar
+// ✅ Vercel ke liye export karna zaroori hai
+export default app;
