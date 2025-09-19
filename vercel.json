@@ -3,21 +3,32 @@
   "builds": [
     {
       "src": "server.js",
-      "use": "@vercel/node"
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": ["uploads/**"]
+      }
     }
   ],
   "routes": [
     {
+      "src": "/images/(.*)",
+      "dest": "/server.js"
+    },
+    {
+      "src": "/api/(.*)",
+      "dest": "/server.js"
+    },
+    {
       "src": "/(.*)",
-      "dest": "server.js"
+      "dest": "/server.js"
     }
   ],
-  "env": {
-    "NODE_ENV": "production"
-  },
   "functions": {
     "server.js": {
-      "maxDuration": 10
+      "maxDuration": 30
     }
+  },
+  "env": {
+    "NODE_ENV": "production"
   }
 }
