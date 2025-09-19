@@ -8,7 +8,6 @@ import orderRouter from "./routes/orderRoute.js";
 import "dotenv/config";
 
 const app = express();
-const port = process.env.PORT || 4000;
 
 // middlewares
 app.use(express.json());
@@ -28,6 +27,9 @@ app.get("/", (req, res) => {
   res.send("API Working");
 });
 
-app.listen(port, () => {
-  console.log(`Server Started on http://localhost:${port}`);
-});
+// ❌ ye line hata dena
+// app.listen(port, () => {
+//   console.log(`Server Started on http://localhost:${port}`);
+// });
+
+export default app;  // ✅ ye add kar
