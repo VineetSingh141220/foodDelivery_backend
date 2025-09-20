@@ -1,14 +1,9 @@
 {
   "version": 2,
-  "functions": {
-    "backend/server.js": {
-      "runtime": "@vercel/node@18.x"
-    }
-  },
-  "rewrites": [
+  "builds": [
     {
-      "source": "/(.*)",
-      "destination": "/backend/server.js"
+      "src": "*.js",
+      "use": "@vercel/node@2"
     }
   ]
 }
