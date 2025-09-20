@@ -2,8 +2,30 @@
   "version": 2,
   "builds": [
     {
-      "src": "*.js",
-      "use": "@vercel/node@2"
+      "src": "server.js",
+      "use": "@vercel/node@3",
+      "config": {
+        "includeFiles": ["uploads/**"]
+      }
     }
-  ]
+  ],
+  "routes": [
+    {
+      "src": "/images/(.*)",
+      "dest": "/server.js"
+    },
+    {
+      "src": "/api/(.*)",
+      "dest": "/server.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/server.js"
+    }
+  ],
+  "functions": {
+    "server.js": {
+      "maxDuration": 30
+    }
+  }
 }
