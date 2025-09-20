@@ -110,8 +110,9 @@ app.use("*", (req, res) => {
   });
 });
 
-// Export for Vercel (serverless)
-export default serverless(app);
+// Export handler function for Vercel
+const handler = serverless(app);
+export default handler;
 
 // For local development
 if (process.env.NODE_ENV !== 'production') {
