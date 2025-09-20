@@ -44,11 +44,11 @@ const connectToDatabase = async () => {
   }
 };
 
-// Middleware to ensure DB connection - COMMENTED OUT
-// app.use(asyncHandler(async (req, res, next) => {
-//   await connectToDatabase();
-//   next();
-// }));
+// Middleware to ensure DB connection - ENABLED
+app.use(asyncHandler(async (req, res, next) => {
+  await connectToDatabase();
+  next();
+}));
 
 // api endpoints
 app.use("/api/food", foodRouter);
