@@ -5,10 +5,10 @@
       "runtime": "@vercel/node@18.x"
     }
   },
-  "routes": [
+  "rewrites": [
     {
-      "src": "/(.*)",
-      "dest": "/backend/server.js"
+      "source": "/(.*)",
+      "destination": "/backend/server.js"
     }
   ]
 }
