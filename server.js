@@ -29,7 +29,6 @@ const asyncHandler = (fn) => (req, res, next) => {
 
 // DB connection with better error handling
 let isConnected = false;
-
 const connectToDatabase = async () => {
   if (isConnected) {
     return;
@@ -45,11 +44,11 @@ const connectToDatabase = async () => {
   }
 };
 
-// Middleware to ensure DB connection
-app.use(asyncHandler(async (req, res, next) => {
-  await connectToDatabase();
-  next();
-}));
+// Middleware to ensure DB connection - COMMENTED OUT
+// app.use(asyncHandler(async (req, res, next) => {
+//   await connectToDatabase();
+//   next();
+// }));
 
 // api endpoints
 app.use("/api/food", foodRouter);
