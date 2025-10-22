@@ -7,7 +7,6 @@ const StoreContextProvider = (props) => {
   const [token, setToken] = useState("");
   const [admin, setAdmin] = useState(false);
 
-
   useEffect(() => {
     async function loadData() {
       if (localStorage.getItem("token")) {
@@ -26,10 +25,12 @@ const StoreContextProvider = (props) => {
     admin,
     setAdmin,
   };
+  
   return (
     <StoreContext.Provider value={contextValue}>
       {props.children}
     </StoreContext.Provider>
   );
 };
+
 export default StoreContextProvider;

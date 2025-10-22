@@ -4,7 +4,6 @@ import bcrypt from "bcrypt";
 import validator from "validator";
 
 // login user
-
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -12,27 +11,25 @@ const loginUser = async (req, res) => {
     if (!user) {
       return res.json({ success: false, message: "User Doesn't exist" });
     }
-    const isMatch =await bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.json({ success: false, message: "Invalid Credentials" });
     }
-    const role=user.role;
+    const role = user.role;
     const token = createToken(user._id);
-    res.json({ success: true, token,role });
+    res.json({ success: true, token, role });
   } catch (error) {
-    console.log(error);
-    res.json({ success: false, message: "Error" });
+    console.log("Login Error:", error);
+    res.json({ success: false, message: error.message });
   }
 };
 
 // Create token
-
 const createToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET);
 };
 
 // register user
-
 const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
   try {
@@ -54,7 +51,6 @@ const registerUser = async (req, res) => {
     }
 
     // hashing user password
-
     const salt = await bcrypt.genSalt(Number(process.env.SALT));
     const hashedPassword = await bcrypt.hash(password, salt);
 
@@ -65,12 +61,12 @@ const registerUser = async (req, res) => {
     });
 
     const user = await newUser.save();
-    const role=user.role;
+    const role = user.role;
     const token = createToken(user._id);
-    res.json({ success: true, token, role});
+    res.json({ success: true, token, role });
   } catch (error) {
-    console.log(error);
-    res.json({ success: false, message: "Error" });
+    console.log("Register Error:", error);
+    res.json({ success: false, message: error.message });
   }
 };
 
